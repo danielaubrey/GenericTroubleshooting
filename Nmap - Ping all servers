@@ -1,0 +1,14 @@
+
+# Using the ARP table of the firewall to seed nmap, run the following commands before and after your 
+# change and complete a quick comparison of the output. Hopefully the number of down hosts will be 
+# the same in both tests, if not, check the AAEP to ensure the EPG of the down hosts is being trunked. 
+
+CYGWIN
+Full output: nmap --max-parallelism=100  -v -n -sP -PE -iL iplist2.txt
+Down Host: nmap --max-parallelism=100  -v -n -sP -PE -iL iplist2.txt | grep down | awk '{print $5}' | sort  | grep -v "10.3.102"
+
+
+Windwos:
+Full Output: nmap --max-parallelism=100  -v -n -sP -PE -iL iplist2.txt
+Down Host: nmap --max-parallelism=100  -v -n -sP -PE -iL iplist2.txt | find “down”
+
