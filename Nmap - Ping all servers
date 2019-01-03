@@ -1,7 +1,8 @@
 
 # Using the ARP table of the firewall to seed nmap, run the following commands before and after your 
 # change and complete a quick comparison of the output. Hopefully the number of down hosts will be 
-# the same in both tests, if not, check the AAEP to ensure the EPG of the down hosts is being trunked. 
+# the same in both tests, if not, check the AAEP to ensure the EPG of the down hosts is being trunked.
+# 1000 servers should respond in under 6 seconds
 
 CYGWIN
 Full output: nmap --max-parallelism=100  -v -n -sP -PE -iL iplist2.txt
