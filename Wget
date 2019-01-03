@@ -1,0 +1,23 @@
+
+# Basic Wget query, showing transfer rate
+
+wget -S -e use_proxy=yes -e http_proxy=[IP]:[PORT] --proxy-user "[USER]" --proxy-password ‘[PASSWORD]' [URL]
+
+--2018-05-17 06:08:48--  
+Resolving proxy (proxy)... 
+Connecting to proxy (proxy)... connected.
+Proxy request sent, awaiting response...
+  HTTP/1.1 200 OK
+  Via: 1.1 VMWITST339
+  Connection: Keep-Alive
+  Proxy-Connection: Keep-Alive
+  Content-Length: 3233972224
+  Date: Wed, 16 May 2018 22:08:47 GMT
+  Content-Type: application/octet-stream
+  Server: nginx/1.0.12
+  Accept-Ranges:  none
+  Last-Modified: Fri, 11 May 2018 05:40:06 GMT
+Length: 3233972224 (3.0G) [application/octet-stream]
+Saving to: ‘’
+
+{FILE}           9%[===========>     ] 293.79M  6.79MB/s    eta 6m 51s
