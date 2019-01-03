@@ -1,0 +1,48 @@
+I have recently been investigating an issue that required searching through large packet captures. The filtering options in Wireshark weren’t sufficient, so to avoid manually scrolling through the Gigs of capture files, I completed the following:
+(Sharing in case you have a similar need at some stage) 
+    
+I had to find TCP sessions which are not receiving a “SYN ACK” after a SYN, instead they were receiving an “ACK”, which is unexpected and results in a firewall drop. The capture is required to pass onto the vender allowing them to troubleshoot the behaviour.
+
+-	Completed a packet capture (capture.pcap)
+o	Standard pcap capture on the load balancer 
+-	Ran TShark, outputting only the fields I needed - TCP Stream and TCP Flags
+
+C:\Program Files\Wireshark>tshark.exe -r "capture.pcap" -T fields  -e tcp.stream -e tcp.flags > output.txt
+
+Example of output.txt
+ID     Flags
+1262    0x00000010
+1169    0x00000010
+1169    0x00000010
+336     0x00000010
+1169    0x00000010
+336     0x00000010
+336     0x00000018
+1169    0x00000010
+1169    0x00000010
+1169    0x00000010
+1169    0x00000010
+1169    0x00000010
+1169    0x00000010
+1263    0x00000010
+1169    0x00000010
+1169    0x00000010
+1169    0x00000010
+
+The first column is the TCP Stream ID, the second column is the TCP Flags
+
+Flags
+SYN     = 0x00000002
+SYN ACK = 0x00000012
+
+Ran a cat  on the outout.txt file
+-	sorting the TCP Streams so they are in order
+-	removing duplicates leaving TCP Stream ID with unique flags
+-	Filtering out non “SYN” and “SYN ACK” flags
+-	Printing only the “TCP Stream” ID
+-	Counting the number of times the “Stream ID” is present
+-	Removing Streams that contain “SYN” and “SYN ACK” flags
+
+cat output.txt| sort | uniq.exe  | grep '002\|0012' | awk '{print $1}' | uniq.exe -c | grep -v "   2"
+
+The end result is a list of TCP streams that only contained a SYN and no SYN ACK
