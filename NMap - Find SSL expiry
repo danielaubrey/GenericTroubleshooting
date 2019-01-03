@@ -1,0 +1,17 @@
+
+# Use Nmap to query SSL Cert details and filter the output to display cert name and expiry 
+
+nmap --script=ssl-cert.nse -p 443 [NETWORK].1-255 | grep 'report\|ssl-cert\|after'
+
+Nmap scan report for [hostname] ([IP Address])
+| ssl-cert: Subject: commonName=*.[domain]/organizationName=[Organisation]/countryName=AU
+| Not valid after:  2020-09-30T12:00:00
+
+Nmap scan report for [hostname] ([IP Address])
+| ssl-cert: Subject: commonName=*.[domain]/organizationName=[Organisation]/countryName=AU
+| Not valid after:  2020-09-30T12:00:00
+
+Nmap scan report for [hostname] ([IP Address])
+| ssl-cert: Subject: commonName=*.[domain]/organizationName=[Organisation]/countryName=AU
+| Not valid after:  2020-09-30T12:00:00
+
