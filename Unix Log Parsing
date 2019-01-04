@@ -1,0 +1,31 @@
+
+
+## GREP ##
+
+# Return lines containing specific text
+grep [string]
+
+# Return lines not containing specific text
+grep -v [string]
+
+# Return lines containing either one string or another
+grep '[string]\|[string]'
+
+AWK
+# Print the first column of each line
+awk '{print $1}'
+
+# Print the second column, with a delimiter of "," from each line
+awk -F "," '{print $2}'
+
+
+SORT
+sort
+sort -r
+sort -rn
+
+tr 
+
+replace string
+sed 's/string1/string2/'
+sed 's/string1/string2/g'
