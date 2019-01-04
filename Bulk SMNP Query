@@ -1,0 +1,20 @@
+#!/user/bin/perl
+
+# devices.txt contains a list of network routers or switches 
+
+
+my @DEVICES;
+open(my $fh, "<", "devices.txt")
+    or die "Failed to open file: $!\n";
+while(<$fh>) {
+    chomp;
+    push @DEVICES, $_;
+}
+close $fh;
+
+foreach $dev (@DEVICES) {
+  print "\n $dev ";
+  my @GET_INDEX =`snmpwalk -v 2c -On -c "[SMNP_READ_STRING]" $dev [SNMP_OID]`;
+  ($INT_INDEX) = @GET_INDEX[0] =~ /.*INTEGER:\s(\w+)/;
+  print "$INT_INDEX ";
+}
