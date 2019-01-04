@@ -1,0 +1,48 @@
+#!/user/bin/perl
+
+
+# Script to query Telstra 3G outage page and return a list of potentially impacted sites
+
+
+### input.csv ###
+#6424,BODALLIN
+#6423,CARRABIN
+#6422,WALGOOLAN
+#6421,BURRACOPPIN
+#6415,MERREDIN
+#6414,NANGEENAN
+#6412,BAANDEE
+#6411,DOODLAKINE
+#6410,KELLERBERRIN
+
+
+!
+my $file = "input.csv";   - Attached csv file (area’s between Kalgoorlie and northam)
+open (FH, "< $file") or die "Can't open $file for read: $!";
+
+my @lines;
+while (<FH>) {
+  push (@lines, $_);
+}
+close FH or die "Cannot close $file: $!";
+
+print "\n";
+print " --- GAWS NextG Outages ---\n";
+foreach $entry (@lines) {
+sleep 5;       - Added 5 second delay between queries so Telstra doesn’t block future queries
+
+my @fields = split /,/, $entry;
+my ($POSTCODE, $SUBURB) = @fields[0, 1];
+chomp $SUBURB;
+$SUBURB =~ s/\s+$//;
+
+my @GET =`curl -s --proxy http://test-proxy:80 https://outages.telstra.com/api/mobile?location=$SUBURB,%20$POSTCODE%20WA`;
+
+if (@GET[0] =~ /difficulties/) {
+   (my $SUBURB1 = $SUBURB) =~ s/%20/ /g;
+   print " - $SUBURB1 \n";
+   } else {
+   #print "$SUBURB No Issues \n";
+   }
+}
+!
