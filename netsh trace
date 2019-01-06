@@ -1,0 +1,55 @@
+Needed to complete a packet capture on a host but didn’t have time or approval to install Wireshark. 
+To complete a capture, netsh was utilised using the following steps:
+
+1) For a remote session, (Skip step if using RDP)
+
+-	Open a command prompt as an Admin account.
+-	Run psexec (https://docs.microsoft.com/en-us/sysinternals/downloads/psexec)
+
+!
+psexec \\[hostname] cmd
+!
+
+
+2) Go to directory where your account has write permissions
+
+!
+cd c:\data
+!
+
+3) Initiate a capture
+
+!
+netsh trace start persistent=yes capture=yes tracefile=c:\data\nettrace-boot.etl
+!
+
+Trace configuration:
+-------------------------------------------------------------------
+Status:             Running
+Trace File:         C:\data\nettrace-boot.etl
+Append:             Off
+Circular:           On
+Max Size:           250 MB
+Report:             Off
+
+
+#Stop a capture 
+
+!
+netsc trace stop
+!
+
+C:\WINDOWS\system32>netsh trace stop
+Correlating traces ... done
+Generating data collection ... done
+The trace file and additional troubleshooting information have been compiled as "c:\temp\nettrace-boot.cab".
+File location = c:\data\nettrace-boot.etl
+Tracing session was successfully stopped.
+
+
+4) # Copy file to your workstation 
+5) # Open file using Microsoft Message Analyzer (https://www.microsoft.com/en-au/download/details.aspx?id=44226)
+
+Note: Microsoft Message Analyzer is a bit average.
+
+
